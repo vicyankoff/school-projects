@@ -1,0 +1,10 @@
+These are some simple games I've made either for class or for fun. If the commenting is good it was probably for class :)
+
+The Hangman is written in Python 3.2. It chooses a random Beatles song from a list of 265. 
+
+The Pig is written in Java.It's a game where you roll a dice and and try to beat the computer to 20. 
+If you roll a 1 your points for the current term are cancelled. You can roll or hold each round.  
+
+Tic Tac Toe is, well Tic Tac Toe. 
+
+ 

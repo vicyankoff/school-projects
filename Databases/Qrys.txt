@@ -1,11 +1,11 @@
-/* Most common paint color used in classrooms on campus */
+/* 1. Most common paint color used in classrooms on campus */
 
 SELECT MAX(Common_Name) 
 FROM ROOM 
 INNER JOIN PAINT ON PAINT.Formula=ROOM.Paint_Color;
 
 
-/* Average time per work order per building */
+/* 2. Average time per work order per building */
 
 SELECT substr(Location,1,2) as Building, 
       AVG(Hours_Spent) 
@@ -13,7 +13,7 @@ FROM PROJECT
 GROUP BY Building;
 
 
-/* Local Kirksville suppliers */
+/* 3. Local Kirksville suppliers */
 
 SELECT Name, 
       Phone_Num 
@@ -21,7 +21,7 @@ FROM SUPPLIER, ADDRESS
 WHERE SUPPLIER.ADDRESS_ID = ADDRESS.ADDRESS_ID AND ADDRESS.city = "Kirksville";
 
 
-/* Total money spent on each supplier */
+/* 4. Total money spent on each supplier */
 
 SELECT Supplier, 
       Cost * Quantity as totalCost 
@@ -30,7 +30,7 @@ GROUB BY Supplier
 ORDER BY totalCost Desc;
 
 
-/* Room availability in the next month from the date the query is ran */
+/* 5. Room availability in the next month from the date the query is ran */
 
 SELECT Room_ID, 
       Paint_Color, 
@@ -39,7 +39,7 @@ FROM ROOM
 WHERE DATEDIFF(Availability, CURDATE()) BETWEEN 0 AND 30;
 
 
-/* Projects that have students working on them and the students' info */
+/* 6. Projects that have students working on them and the students' info */
 
 SELECT Name, 
       Phone_Num, 
@@ -49,7 +49,7 @@ FROM STUDENT_EMPLOYEE, PROJECT_EMPLOYEE
 WHERE PROJECT_EMPLOYEE.Truman_Id = STUDENT_EMPLOYEE.Truman_Id;
 
 
-/* Which products that have been purchased from the top three supplies, and the total $ spent on them */
+/* 7. Which products that have been purchased from the top three supplies, and the total $ spent on them */
 
 
 SELECT SUPPLIER, 
@@ -76,7 +76,7 @@ ORDER BY SUPPLIER
 LIMIT 0 , 30;
 
 
-/* Total expenditure on each project broken down by expenditures on people and supplies */
+/* 8. Total expenditure on each project broken down by expenditures on people and supplies */
 
 SELECT PR.WORK_ORDER, 
         PR.HOURS_SPENT * 9 AS EMPLOYEE_EXPENDITURES, 

@@ -49,7 +49,7 @@ FROM STUDENT_EMPLOYEE, PROJECT_EMPLOYEE
 WHERE PROJECT_EMPLOYEE.Truman_Id = STUDENT_EMPLOYEE.Truman_Id;
 
 
-/* 7. Which products that have been purchased from the top three supplies, and the total $ spent on them */
+/* 7. Products that have been purchased from the top three supplies, and their total cost */
 
 
 SELECT SUPPLIER, 

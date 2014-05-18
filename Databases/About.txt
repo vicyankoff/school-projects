@@ -1,0 +1,8 @@
+This is a project for my CS430 Databases class where we had to design and implement a database system. 
+In a team of three, we built a small inventory system to keep track of materials, money expenditures and other information the Paint Crew at Truman State University wanted. This system will be especially useful in planning and scheduling for the future but also in keeping control of costs and expendtiures on current projects. We provided queries for several very useful reports and it could be extended to include even more information.
+
+The tables are normalized to 3rd normal form. 
+The implementation was in MySql and the diagrams were done in Dia. 
+
+We also included a web GUI, but the code is hosted on the school's servers and can be accessed only from Truman's IP address. 
+

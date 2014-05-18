@@ -1,0 +1,97 @@
+/* Most common paint color used in classrooms on campus */
+
+SELECT MAX(Common_Name) 
+FROM ROOM 
+INNER JOIN PAINT ON PAINT.Formula=ROOM.Paint_Color;
+
+
+/* Average time per work order per building */
+
+SELECT substr(Location,1,2) as Building, 
+      AVG(Hours_Spent) 
+FROM PROJECT 
+GROUP BY Building;
+
+
+/* Local Kirksville suppliers */
+
+SELECT Name, 
+      Phone_Num 
+FROM SUPPLIER, ADDRESS 
+WHERE SUPPLIER.ADDRESS_ID = ADDRESS.ADDRESS_ID AND ADDRESS.city = "Kirksville";
+
+
+/* Total money spent on each supplier */
+
+SELECT Supplier, 
+      Cost * Quantity as totalCost 
+FROM SUPPLIES 
+GROUB BY Supplier
+ORDER BY totalCost Desc;
+
+
+/* Room availability in the next month from the date the query is ran */
+
+SELECT Room_ID, 
+      Paint_Color, 
+        Availability 
+FROM ROOM 
+WHERE DATEDIFF(Availability, CURDATE()) BETWEEN 0 AND 30;
+
+
+/* Projects that have students working on them and the students' info */
+
+SELECT Name, 
+      Phone_Num, 
+      PROJECT_EMPLOYEE.Truman_Id, 
+      Work_Order 
+FROM STUDENT_EMPLOYEE, PROJECT_EMPLOYEE 
+WHERE PROJECT_EMPLOYEE.Truman_Id = STUDENT_EMPLOYEE.Truman_Id;
+
+
+/* Which products that have been purchased from the top three supplies, and the total $ spent on them */
+
+
+SELECT SUPPLIER, 
+        PRODUCT_NAME, 
+        COST
+FROM SUPPLIES
+WHERE SUPPLIER
+IN 
+(
+  SELECT S.SUPPLIER
+  FROM SUPPLIES S
+  INNER JOIN 
+  (
+    SELECT Supplier, Cost * Quantity AS totalCost
+    FROM SUPPLIES
+    GROUP BY Supplier
+    ORDER BY totalCost DESC
+    LIMIT 3
+  )
+  Q ON Q.SUPPLIER = S.SUPPLIER
+  GROUP BY S.SUPPLIER
+)
+ORDER BY SUPPLIER
+LIMIT 0 , 30;
+
+
+/* Total expenditure on each project broken down by expenditures on people and supplies */
+
+SELECT PR.WORK_ORDER, 
+        PR.HOURS_SPENT * 9 AS EMPLOYEE_EXPENDITURES, 
+        Q.TOTAL AS SUPPLIES_EXPENDITURES,
+        (PR.HOURS_SPENT * 9 + Q.TOTAL) AS TOTAL   
+FROM PROJECT PR
+INNER JOIN 
+(
+  SELECT work_order, SUM( S.COST * P.quantity ) AS Total
+  FROM PROJECT_SUPPLIES_EXPENDITURES P
+  INNER JOIN SUPPLIES S ON S.PRODUCT_NUM = P.PRODUCT_NUM
+  GROUP BY work_order
+  LIMIT 0 , 30
+)
+Q ON Q.WORK_ORDER = PR.WORK_ORDER
+GROUP BY PR.WORK_ORDER;
+
+
